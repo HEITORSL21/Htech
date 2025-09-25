@@ -370,7 +370,7 @@ button:active {
     <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
     <div class="particles-holder"></div>
   </div>
-  
+
   <button type="submit">
     <div class="svg-wrapper-1">
       <div class="svg-wrapper">
@@ -394,6 +394,7 @@ button:active {
     </form>
   </section>
 </main>
+
 <footer>
   Htech © <span id="year"></span> — Tecnologia e confiança
   <div class="social-links" style="margin-top:.6rem">
@@ -405,6 +406,7 @@ button:active {
 <a class="whatsapp-float" href="https://wa.me/5589994386200" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
   <i class="fab fa-whatsapp" aria-hidden="true"></i>
 </a>
+
 <!-- External libs -->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
@@ -549,7 +551,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
  (function() {
-    emailjs.init("Q7r4LvGsNxn0yLdb9");
+    emailjs.init("Q7r4LvGsNxn0yLdb9"); // sua Public Key
   })();
 
   const form = document.getElementById('contact-form');
@@ -558,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    emailjs.sendForm('service_33p3zl7', 'template_bgi6wx8', this)
+    emailjs.sendForm('service_p0nbjbs', 'template_v4pg7hg', this)
       .then(() => {
         showNotification("✔ Mensagem enviada com sucesso!", "success");
         form.reset();
