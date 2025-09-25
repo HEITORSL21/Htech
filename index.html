@@ -531,37 +531,6 @@ document.addEventListener('keydown', e=>{if(e.key==='Tab'){document.querySelecto
   onScroll();addEventListener('scroll', onScroll);
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formContato");
-  const resposta = document.getElementById("respostaForm");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const dados = {
-      nome: form.nome.value,
-      email: form.email.value,
-      mensagem: form.mensagem.value,
-    };
-
-    try {
-      const res = await fetch("/contato", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados),
-      });
-
-      const result = await res.json();
-      resposta.textContent = result.msg;
-      resposta.style.color = result.success ? "#0ff" : "red";
-
-      if (result.success) form.reset();
-    } catch (err) {
-      resposta.textContent = "❌ Erro ao enviar, tente novamente.";
-      resposta.style.color = "red";
-    }
-  });
-});
 // --- EmailJS for contact form ---
 emailjs.init("Q7r4LvGsNxn0yLdb9"); // Public Key EmailJS
 
