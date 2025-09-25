@@ -6,7 +6,7 @@
 <title>Htech - Manutenção de Computadores (Futurista)</title>
 <!-- Font & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
 <style>
   /* Reset e base */
@@ -15,248 +15,226 @@
   a{color:#0ff;text-decoration:none;transition:0.3s}
   a:hover{text-shadow:0 0 8px #0ff,0 0 20px #0ff}
 
-  /* Fundo de partículas (canvas full screen) */
   #particles-canvas{position:fixed;inset:0;z-index:-2}
   .parallax-layer{position:fixed;inset:0;z-index:-3;background-repeat:no-repeat;background-position:center;background-size:cover;transform:translateZ(0);}
 
-  /* Header */
   header{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(10,10,30,0.75);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;z-index:1000;box-shadow:0 0 15px #0ff}
   .logo{font-size:1.8rem;font-weight:700;color:#0ff;text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff;cursor:default}
   nav ul{list-style:none;display:flex;gap:1.2rem}
   nav a{padding:.3rem .6rem;border-radius:6px;font-weight:600}
   nav a:hover{color:#020202;background:linear-gradient(90deg,#0ff,#00e6e6);box-shadow:0 0 12px #0ff}
 
-  /* Cursor custom */
   .cursor{position:fixed;pointer-events:none;z-index:2000;width:32px;height:32px;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen;border:2px solid #0ff;box-shadow:0 0 12px #0ff,0 0 30px #0ff;transition:width .12s,height .12s,background .12s,opacity .12s}
   .cursor-dot{position:fixed;pointer-events:none;z-index:2001;width:6px;height:6px;border-radius:50%;background:#0ff;transform:translate(-50%,-50%);opacity:.9}
 
   main{padding-top:80px}
 
-  /* Hero */
   section.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 1rem;position:relative;z-index:1}
   h1.title-gradient{font-size:3.6rem;background:linear-gradient(270deg,#00f6ff,#8a4cff,#0ff);-webkit-background-clip:text;background-clip:text;color:transparent;animation:moveGradient 6s linear infinite;background-size:200% 200%}
   @keyframes moveGradient{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
   p#subtexto{margin-top:1rem;font-size:1.4rem;color:#a0f0ffcc;min-height:2rem;font-weight:500}
 
-  /* botão neon com pulse e partículas */
   .btn-neon{margin-top:2rem;padding:1rem 2.4rem;font-size:1.15rem;font-weight:700;color:#0ff;background:transparent;border:2px solid #0ff;border-radius:50px;cursor:pointer;box-shadow:0 0 8px #0ff;position:relative;overflow:visible}
   .btn-neon:focus{outline:none}
   .btn-neon .btn-pulse{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 30px rgba(0,255,255,0.08);animation:pulseBtn 2.2s infinite}
   @keyframes pulseBtn{0%{transform:scale(.9);opacity:.9}50%{transform:scale(1.05);opacity:1}100%{transform:scale(.9);opacity:.9}}
   .btn-particles-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
 
-  /* Serviços */
   section.servicos{padding:4rem 2rem 6rem;background:linear-gradient(135deg,#1a0a3a,#0a1a3a);text-align:center}
   section.servicos h2{font-size:2.6rem;margin-bottom:1.6rem;color:#0ff;text-shadow:0 0 10px #0ff}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.6rem;max-width:1100px;margin:0 auto}
-  .card{background:linear-gradient(180deg,rgba(0,255,255,0.06),rgba(0,255,255,0.03));border-radius:14px;padding:1.8rem 1.2rem;color:#0ff;box-shadow:0 0 8px rgba(0,255,255,0.06),inset 0 0 8px rgba(0,255,255,0.04);transition:transform .4s ease,box-shadow .4s ease;opacity:0;transform:translateY(30px)}
+  .card{background:linear-gradient(180deg,rgba(0,255,255,0.06),rgba(0,255,255,0.03));border-radius:14px;padding:1.8rem 1.2rem;color:#0ff;box-shadow:0 0 8px rgba(0,255,255,0.06),inset 0 0 8px rgba(0,255,255,0.04);transition:transform .4s ease,box-shadow .4s ease;opacity:0;transform:translateY(30px);position:relative;}
   .card.neon-border{border:2px solid rgba(0,255,255,0.06);box-shadow:0 0 20px rgba(0,255,255,0.06),0 8px 30px rgba(0,0,0,0.4)}
   .card .icon{font-size:2.4rem;margin-bottom:1rem;display:inline-block;padding:0.6rem;border-radius:10px}
   .card h3{font-size:1.2rem;margin-bottom:.6rem}
   .card p{font-size:.95rem;color:#bff}
   .card:focus{outline:2px dashed #0ff}
 
-  /* Neon animated border */
   .card::before{content:'';position:absolute;inset:0;border-radius:14px;padding:2px;background:linear-gradient(90deg,#0ff,#00e6e6,#8a4cff);-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);opacity:0;transition:opacity .4s}
   .card:hover::before{opacity:1}
 
-  /* Sobre */
   section.sobre.sr{padding:4rem 2rem 6rem;background:linear-gradient(270deg,#2a0a4a,#0a2a4a);color:#a0f0ffcc;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2.5rem}
   .sobre .texto{flex:1 1 350px;font-size:1.1rem;line-height:1.6;max-width:600px}
-  .sobre .anim-lottie{flex:1 1 350px;max-width:420px}
+  .sobre .animação-computador{flex:1 1 350px;max-width:420px}
 
   .card, #sobre {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.3s;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.3s;
   }
-}
-.animação-computador lottie-player {
-  width: 500px;
-  height: 500px;
-  max-width: 100%;
-  margin: 0 auto;
-  display: flex;
-}
-  /* Contato */
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animação-computador lottie-player {
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+  }
+
   section.contato{padding:3.5rem 2rem 6rem;background:linear-gradient(135deg,#1a0a3a,#0a1a3a);color:#0ff;max-width:900px;margin:0 auto}
   section.contato h2{text-align:center;font-size:2.4rem;margin-bottom:1.4rem}
   .contatos{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem;margin-bottom:1.8rem}
   .contato-item{display:flex;align-items:center;gap:.6rem;font-size:1.05rem;min-width:200px;transition:all .25s}
   .contato-item .icon{font-size:1.3rem}
-.contato-flex {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-}
-
-.contato-lottie {
-  width: 260px;
-  max-width: 90vw;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  filter: drop-shadow(0 0 10px #0ff);
-}
-
-.contato-lottie lottie-player,
-.contato-lottie img {
-  width: 100%;
-  border-radius: 15px;
-}
-.contato-info {
-  flex: 2 1 400px;
-  min-width: 260px;
-}
-@media (max-width: 900px) {
   .contato-flex {
-    flex-direction: column;
-    align-items: stretch;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
   }
+
   .contato-lottie {
-    max-width: 100%;
-    margin-bottom: 2rem;
+    width: 260px;
+    max-width: 90vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 0 10px #0ff);
   }
-}
 
-/* Form */
-form{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-input,textarea{background:rgba(0,255,255,0.06);border:2px solid rgba(0,255,255,0.08);border-radius:8px;padding:.8rem 1rem;color:#0ff;font-size:1rem;transition:box-shadow .25s,border-color .25s}
-input:focus,textarea:focus{outline:none;border-color:#0ff;box-shadow:0 0 10px #0ff}
+  .contato-lottie lottie-player,
+  .contato-lottie img {
+    width: 100%;
+    border-radius: 15px;
+  }
+  .contato-info {
+    flex: 2 1 400px;
+    min-width: 260px;
+  }
+  @media (max-width: 900px) {
+    .contato-flex {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .contato-lottie {
+      max-width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
 
-/* particle hints inside input */
+  form{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+  input,textarea{background:rgba(0,255,255,0.06);border:2px solid rgba(0,255,255,0.08);border-radius:8px;padding:.8rem 1rem;color:#0ff;font-size:1rem;transition:box-shadow .25s,border-color .25s}
+  input:focus,textarea:focus{outline:none;border-color:#0ff;box-shadow:0 0 10px #0ff}
+
   .input-particles{position:relative}
   .input-particles .particles-holder{position:absolute;inset:0;pointer-events:none}
 
-  /* Footer */
   footer{background:rgba(10,10,30,0.85);backdrop-filter:blur(10px);text-align:center;padding:1.2rem 1rem;color:#0ff;font-weight:600;box-shadow:0 0 15px #0ff}
 
-  /* WhatsApp flutuante */
   .whatsapp-float{position:fixed;right:20px;bottom:20px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#00e6e6,#0ff);box-shadow:0 0 20px #0ff;z-index:1500}
   .whatsapp-float i{font-size:1.6rem;color:#020202}
 
-  /* utilidades Reveal */
   .sr{opacity:0;transform:translateY(20px)}
 
   @media(max-width:768px){h1.title-gradient{font-size:2.4rem}nav ul{display:flex;gap:.6rem}}
 
-
-  /* Botão Enviar com borda LED roxo e azul e estilo tecnológico */
-button {
-  font-family: inherit;
-  font-size: 20px;
-  background: royalblue;
-  color: white;
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-button span {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-button svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-button:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
-}
-
-button:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-button:hover span {
-  transform: translateX(5em);
-}
-button:active {
-  transform: scale(0.95);
-}
-@keyframes fly-1 {
-  from {
-    transform: translateY(0.1em);
+  button {
+    font-family: inherit;
+    font-size: 20px;
+    background: royalblue;
+    color: white;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
   }
-  to {
-    transform: translateY(-0.1em);
+  button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
   }
-}
+  button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  button:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  button:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  button:hover span {
+    transform: translateX(5em);
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
 
-/* Notificação cyberpunk */
-#notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 12px 20px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  border: 2px solid;
-  border-radius: 8px;
-  box-shadow: 0 0 15px #0ff;
-  text-transform: uppercase;
-  z-index: 9999;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.3s ease;
-}
+  #notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    border: 2px solid;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #0ff;
+    text-transform: uppercase;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+  }
+  #notification.show { opacity: 1; transform: translateY(0); }
+  #notification.success {
+    color: #0ff;
+    border-color: #0ff;
+    background: rgba(0, 255, 255, 0.1);
+    text-shadow: 0 0 5px #0ff;
+  }
+  #notification.error {
+    color: #f0f;
+    border-color: #f0f;
+    background: rgba(255, 0, 255, 0.1);
+    text-shadow: 0 0 5px #f0f, 0 0 10px #ff00ff;
+    animation: glitch 0.3s infinite;
+  }
+  @keyframes glitch {
+    0%   { transform: translate(1px, -1px) skew(0.5deg); }
+    20%  { transform: translate(-2px, 1px) skew(-0.5deg); }
+    40%  { transform: translate(-1px, -1px) skew(1deg); }
+    60%  { transform: translate(2px, 2px) skew(-1deg); }
+    80%  { transform: translate(-1px, 1px) skew(0.5deg); }
+    100% { transform: translate(1px, -2px) skew(-0.5deg); }
+  }
 
-#notification.show { opacity: 1; transform: translateY(0); }
-
-#notification.success {
-  color: #0ff;
-  border-color: #0ff;
-  background: rgba(0, 255, 255, 0.1);
-  text-shadow: 0 0 5px #0ff;
-}
-
-#notification.error {
-  color: #f0f;
-  border-color: #f0f;
-  background: rgba(255, 0, 255, 0.1);
-  text-shadow: 0 0 5px #f0f, 0 0 10px #ff00ff;
-  animation: glitch 0.3s infinite;
-}
-
-@keyframes glitch {
-  0%   { transform: translate(1px, -1px) skew(0.5deg); }
-  20%  { transform: translate(-2px, 1px) skew(-0.5deg); }
-  40%  { transform: translate(-1px, -1px) skew(1deg); }
-  60%  { transform: translate(2px, 2px) skew(-1deg); }
-  80%  { transform: translate(-1px, 1px) skew(0.5deg); }
-  100% { transform: translate(1px, -2px) skew(-0.5deg); }
-}
-
-/* Borda neon inputs */
-input, textarea {
-  background: rgba(0,255,255,0.06);
-  border: 2px solid rgba(0,255,255,0.08);
-  border-radius: 8px;
-  padding: .8rem 1rem;
-  color: #0ff;
-  font-size: 1rem;
-  transition: box-shadow .25s, border-color .25s;
-}
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #0ff;
-  box-shadow: 0 0 12px #0ff;
-}
+  input, textarea {
+    background: rgba(0,255,255,0.06);
+    border: 2px solid rgba(0,255,255,0.08);
+    border-radius: 8px;
+    padding: .8rem 1rem;
+    color: #0ff;
+    font-size: 1rem;
+    transition: box-shadow .25s, border-color .25s;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #0ff;
+    box-shadow: 0 0 12px #0ff;
+  }
 </style>
 </head>
 <body>
@@ -314,7 +292,6 @@ input:focus, textarea:focus {
     </div>
   </section>
 
-<!-- Sobre Nós -->
 <section class="sobre sr" id="sobre" aria-label="Seção sobre a empresa">
   <div class="texto">
     <h2 class="section-title">Por que escolher a Htech?</h2>
@@ -324,9 +301,7 @@ input:focus, textarea:focus {
       Conte conosco para manutenção preventiva, reparos e suporte técnico com qualidade futurista.
     </p>
   </div>
-
   <div class="animação-computador">
-    <!-- Animação Lottie -->
     <lottie-player 
       src="https://lottie.host/7910c892-7762-4f31-b5eb-de076529cd1c/FRdmbEfPlr.json"  
       background="transparent"    
@@ -334,8 +309,6 @@ input:focus, textarea:focus {
       loop  
       autoplay>
     </lottie-player>
-
-    <!-- Fallback para quando animação não carregar -->
     <noscript>
       <img src="fallback.png" alt="Ilustração sobre tecnologia futurista" />
     </noscript>
@@ -344,7 +317,6 @@ input:focus, textarea:focus {
 
   <section class="contato" id="contato" aria-label="Seção contato">
     <h2>Contato</h2>
-    
     <div class="contato-lottie">
       <lottie-player
         src="https://lottie.host/48769e28-16d1-4430-aebc-468dfc4d4264/BRNB8IWvAA.json"
@@ -357,53 +329,45 @@ input:focus, textarea:focus {
         <img src="fallback-celular.png" alt="Ilustração de celular futurista" />
       </noscript>
     </div>
-    
     <div class="contatos">
       <div class="contato-item"><i class="fab fa-whatsapp icon" aria-hidden="true"></i><a href="https://wa.me/5589994386200" target="_blank" rel="noopener">WhatsApp</a></div>
       <div class="contato-item"><i class="fab fa-instagram icon" aria-hidden="true"></i><a href="https://www.instagram.com/htech_manuntencao/" target="_blank" rel="noopener">Instagram</a></div>
       <div class="contato-item"><i class="fas fa-envelope icon" aria-hidden="true"></i><a href="mailto:htechmanuntencao@gmail.com?subject=Quero um orçamento">Email</a></div>
     </div>
-    
-<!-- FORMULÁRIO -->
-<form id="contact-form">
-  <div class="input-particles">
-    <label for="from_name">Nome</label>
-    <input type="text" id="from_name" name="from_name" placeholder="Seu nome" required />
-    <div class="particles-holder"></div>
-  </div>
-  
-  <div class="input-particles">
-    <label for="reply_to">Email</label>
-    <input type="email" id="reply_to" name="reply_to" placeholder="Seu e-mail" required />
-    <div class="particles-holder"></div>
-  </div>
-  
-  <div class="input-particles">
-    <label for="message">Mensagem</label>
-    <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
-    <div class="particles-holder"></div>
-  </div>
-
-  <button type="submit">
-    <div class="svg-wrapper-1">
-      <div class="svg-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" 
-             viewBox="0 0 24 24" 
-             width="24" height="24">
-          <path fill="none" d="M0 0h24v24H0z"></path>
-          <path fill="currentColor"
-            d="M1.946 9.315c-.522-.174-.527-.455.01-.634
-               l19.087-6.362c.529-.176.832.12.684.638
-               l-5.454 19.086c-.15.529-.455.547-.679.045
-               L12 14l6-8-8 6-8.054-2.685z"></path>
-        </svg>
+    <form id="contact-form">
+      <div class="input-particles">
+        <label for="from_name">Nome</label>
+        <input type="text" id="from_name" name="from_name" placeholder="Seu nome" required />
+        <div class="particles-holder"></div>
       </div>
-    </div>
-    <span>Enviar</span>
-  </button>
-</form>
-<!-- CAIXA DE NOTIFICAÇÃO -->
-<div id="notification" class="hidden"></div>
+      <div class="input-particles">
+        <label for="reply_to">Email</label>
+        <input type="email" id="reply_to" name="reply_to" placeholder="Seu e-mail" required />
+        <div class="particles-holder"></div>
+      </div>
+      <div class="input-particles">
+        <label for="message">Mensagem</label>
+        <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+        <div class="particles-holder"></div>
+      </div>
+      <button type="submit">
+        <div class="svg-wrapper-1">
+          <div class="svg-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 viewBox="0 0 24 24" 
+                 width="24" height="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path fill="currentColor"
+                d="M1.946 9.315c-.522-.174-.527-.455.01-.634
+                   l19.087-6.362c.529-.176.832.12.684.638
+                   l-5.454 19.086c-.15.529-.455.547-.679.045
+                   L12 14l6-8-8 6-8.054-2.685z"></path>
+            </svg>
+          </div>
+        </div>
+        <span>Enviar</span>
+      </button>
+      <div id="notification"></div>
     </form>
   </section>
 </main>
@@ -499,7 +463,6 @@ const style = document.createElement('style');style.innerHTML = `
 document.querySelectorAll('.input-particles input, .input-particles textarea').forEach(el=>{
   const holder = el.parentElement.querySelector('.particles-holder');
   el.addEventListener('focus', ()=>{
-    // create a few floating dots
     for(let i=0;i<8;i++){const d=document.createElement('div');d.className='dot';d.style.position='absolute';d.style.width=(4+Math.random()*6)+'px';d.style.height=d.style.width;d.style.borderRadius='50%';d.style.left=(10+Math.random()*80)+'%';d.style.top=(20+Math.random()*60)+'%';d.style.opacity='0';d.style.transform='translateY(0)';d.style.background='#0ff';d.style.transition='transform 900ms cubic-bezier(.2,.9,.2,1),opacity 900ms';holder.appendChild(d);setTimeout(()=>{d.style.opacity='1';d.style.transform='translateY(-18px)';d.style.opacity='0';},30);setTimeout(()=>d.remove(),1100)}
   });
 });
@@ -510,21 +473,16 @@ document.querySelectorAll('.input-particles input, .input-particles textarea').f
   const dot = document.getElementById('cursorDot');
   let mx = -100, my = -100;
   addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';dot.style.left=(mx)+'px';dot.style.top=(my)+'px'});
-  // enlarge on interactive elements
   const hoverTargets = 'a,button,input,textarea,.card,.btn-neon,.whatsapp-float';
   document.querySelectorAll(hoverTargets).forEach(el=>{
     el.addEventListener('mouseenter', ()=>{cursor.style.transform='translate(-50%,-50%) scale(1.6)';cursor.style.width='44px';cursor.style.height='44px';cursor.style.opacity='1'});
     el.addEventListener('mouseleave', ()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';cursor.style.width='32px';cursor.style.height='32px';cursor.style.opacity='1'});
   });
-  // hide on mobile touch
   addEventListener('touchstart', ()=>{cursor.style.display='none';dot.style.display='none'});
 })();
 
-
-// --- Small accessibility: allow keyboard reveal of sr elements when focused via keyboard ---
 document.addEventListener('keydown', e=>{if(e.key==='Tab'){document.querySelectorAll('.sr').forEach(el=>el.style.opacity=1)}});
 
-// --- Simple animation to set sr elements visible when in viewport fallback (for old browsers) ---
 (function(){
   const els = document.querySelectorAll('.sr');
   function onScroll(){const vh = window.innerHeight;els.forEach(el=>{const r = el.getBoundingClientRect();if(r.top < vh - 60){el.style.opacity=1;el.style.transform='translateY(0)';el.style.transition='opacity .6s ease, transform .6s ease'}})}
