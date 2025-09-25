@@ -197,6 +197,53 @@ button:active {
     transform: translateY(-0.1em);
   }
 }
+
+#notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  border: 2px solid;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #0ff;
+  text-transform: uppercase;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}
+
+#notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#notification.success {
+  color: #0ff;
+  border-color: #0ff;
+  background: rgba(0, 255, 255, 0.1);
+  text-shadow: 0 0 5px #0ff;
+}
+
+#notification.error {
+  color: #f0f;
+  border-color: #f0f;
+  background: rgba(255, 0, 255, 0.1);
+  text-shadow: 0 0 5px #f0f, 0 0 10px #ff00ff;
+  animation: glitch 0.3s infinite;
+}
+
+/* ANIMAÇÃO ERRO */
+@keyframes glitch {
+  0%   { transform: translate(1px, -1px) skew(0.5deg); }
+  20%  { transform: translate(-2px, 1px) skew(-0.5deg); }
+  40%  { transform: translate(-1px, -1px) skew(1deg); }
+  60%  { transform: translate(2px, 2px) skew(-1deg); }
+  80%  { transform: translate(-1px, 1px) skew(0.5deg); }
+  100% { transform: translate(1px, -2px) skew(-0.5deg); }
+}
 </style>
 </head>
 <body>
@@ -304,46 +351,49 @@ button:active {
       <div class="contato-item"><i class="fas fa-envelope icon" aria-hidden="true"></i><a href="mailto:htechmanuntencao@gmail.com?subject=Quero um orçamento">Email</a></div>
     </div>
     
-    <form aria-label="Formulário de contato">
-      <div class="input-particles">
-        <label for="nome">Nome</label>
-        <input id="nome" name="nome" type="text" required>
-        <div class="particles-holder" aria-hidden="true"></div>
-      </div>
-      <div class="input-particles">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required>
-        <div class="particles-holder" aria-hidden="true"></div>
-      </div>
-      <div class="input-particles">
-        <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
-        <div class="particles-holder" aria-hidden="true"></div>
-      </div>
-      <button>
-  <div class="svg-wrapper-1">
-    <div class="svg-wrapper">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-      >
-        <path fill="none" d="M0 0h24v24H0z"></path>
-        <path
-          fill="currentColor"
-          d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-        ></path>
-      </svg>
-    </div>
+<!-- FORMULÁRIO -->
+<form id="contact-form">
+  <div class="input-particles">
+    <label for="from_name">Nome</label>
+    <input type="text" id="from_name" name="from_name" placeholder="Seu nome" required />
+    <div class="particles-holder"></div>
   </div>
-  <span>Enviar</span>
-</button>
-
+  
+  <div class="input-particles">
+    <label for="reply_to">Email</label>
+    <input type="email" id="reply_to" name="reply_to" placeholder="Seu e-mail" required />
+    <div class="particles-holder"></div>
+  </div>
+  
+  <div class="input-particles">
+    <label for="message">Mensagem</label>
+    <textarea id="message" name="message" rows="5" placeholder="Sua mensagem" required></textarea>
+    <div class="particles-holder"></div>
+  </div>
+  
+  <button type="submit">
+    <div class="svg-wrapper-1">
+      <div class="svg-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             viewBox="0 0 24 24" 
+             width="24" height="24">
+          <path fill="none" d="M0 0h24v24H0z"></path>
+          <path fill="currentColor"
+            d="M1.946 9.315c-.522-.174-.527-.455.01-.634
+               l19.087-6.362c.529-.176.832.12.684.638
+               l-5.454 19.086c-.15.529-.455.547-.679.045
+               L12 14l6-8-8 6-8.054-2.685z"></path>
+        </svg>
+      </div>
+    </div>
+    <span>Enviar</span>
+  </button>
+</form>
+<!-- CAIXA DE NOTIFICAÇÃO -->
+<div id="notification" class="hidden"></div>
     </form>
   </section>
 </main>
-
 <footer>
   Htech © <span id="year"></span> — Tecnologia e confiança
   <div class="social-links" style="margin-top:.6rem">
@@ -355,12 +405,13 @@ button:active {
 <a class="whatsapp-float" href="https://wa.me/5589994386200" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
   <i class="fab fa-whatsapp" aria-hidden="true"></i>
 </a>
-
 <!-- External libs -->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 <script>
 // small helpers
@@ -405,7 +456,6 @@ ScrollReveal().reveal('.sr', {
   viewFactor: 0.1
 });
 
-
 // --- VanillaTilt para cards (3D tilt) ---
 document.querySelectorAll('.card').forEach(el=>{VanillaTilt.init(el,{max:10,speed:400,glare:true,'max-glare':0.12})});
 
@@ -429,7 +479,6 @@ const style = document.createElement('style');style.innerHTML = `
   function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.09;p.life--;ctx.globalAlpha=Math.max(0,p.life/60);ctx.fillStyle='#0ff';ctx.beginPath();ctx.arc(p.x,p.y,Math.max(0,2*(p.life/60)),0,Math.PI*2);ctx.fill();if(p.life<=0)particles.splice(i,1)}requestAnimationFrame(loop)}
   loop();
 })();
-
 
 // --- Input particles (simple DOM particles) ---
 document.querySelectorAll('.input-particles input, .input-particles textarea').forEach(el=>{
@@ -498,6 +547,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+ (function() {
+    emailjs.init("Q7r4LvGsNxn0yLdb9");
+  })();
+
+  const form = document.getElementById('contact-form');
+  const notification = document.getElementById('notification');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm('service_33p3zl7', 'template_bgi6wx8', this)
+      .then(() => {
+        showNotification("✔ Mensagem enviada com sucesso!", "success");
+        form.reset();
+      }, (error) => {
+        showNotification("⚠ Erro ao enviar mensagem!", "error");
+      });
+  });
+
+  function showNotification(message, type) {
+    notification.textContent = message;
+    notification.className = type; // adiciona a classe correspondente
+    notification.classList.add('show');
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 4000);
+  }
 </script>
 </body>
 </html>
