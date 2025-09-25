@@ -198,6 +198,7 @@ button:active {
   }
 }
 
+/* Notificação cyberpunk */
 #notification {
   position: fixed;
   top: 20px;
@@ -215,10 +216,7 @@ button:active {
   transition: all 0.3s ease;
 }
 
-#notification.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+#notification.show { opacity: 1; transform: translateY(0); }
 
 #notification.success {
   color: #0ff;
@@ -235,7 +233,6 @@ button:active {
   animation: glitch 0.3s infinite;
 }
 
-/* ANIMAÇÃO ERRO */
 @keyframes glitch {
   0%   { transform: translate(1px, -1px) skew(0.5deg); }
   20%  { transform: translate(-2px, 1px) skew(-0.5deg); }
@@ -243,6 +240,22 @@ button:active {
   60%  { transform: translate(2px, 2px) skew(-1deg); }
   80%  { transform: translate(-1px, 1px) skew(0.5deg); }
   100% { transform: translate(1px, -2px) skew(-0.5deg); }
+}
+
+/* Borda neon inputs */
+input, textarea {
+  background: rgba(0,255,255,0.06);
+  border: 2px solid rgba(0,255,255,0.08);
+  border-radius: 8px;
+  padding: .8rem 1rem;
+  color: #0ff;
+  font-size: 1rem;
+  transition: box-shadow .25s, border-color .25s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #0ff;
+  box-shadow: 0 0 12px #0ff;
 }
 </style>
 </head>
@@ -549,34 +562,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// --- EmailJS for contact form ---
+emailjs.init("Q7r4LvGsNxn0yLdb9"); // Public Key EmailJS
 
- (function() {
-    emailjs.init("Q7r4LvGsNxn0yLdb9"); // sua Public Key
-  })();
+const form = document.getElementById('contact-form');
+const notification = document.getElementById('notification');
 
-  const form = document.getElementById('contact-form');
-  const notification = document.getElementById('notification');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
 
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
+  emailjs.sendForm('service_p0nbjbs', 'template_v4pg7hg', this)
+    .then(() => {
+      showNotification("✔ Mensagem enviada com sucesso!", "success");
+      form.reset();
+    }, (error) => {
+      console.error(error);
+      showNotification("⚠ Erro ao enviar mensagem!", "error");
+    });
+});
 
-    emailjs.sendForm('service_p0nbjbs', 'template_v4pg7hg', this)
-      .then(() => {
-        showNotification("✔ Mensagem enviada com sucesso!", "success");
-        form.reset();
-      }, (error) => {
-        showNotification("⚠ Erro ao enviar mensagem!", "error");
-      });
-  });
-
-  function showNotification(message, type) {
-    notification.textContent = message;
-    notification.className = type; // adiciona a classe correspondente
-    notification.classList.add('show');
-    setTimeout(() => {
-      notification.classList.remove('show');
-    }, 4000);
-  }
+function showNotification(message, type) {
+  notification.textContent = message;
+  notification.className = type;
+  notification.classList.add('show');
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 4000);
+}
 </script>
 </body>
 </html>
