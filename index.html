@@ -498,7 +498,7 @@ const notification = document.getElementById('notification');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  emailjs.sendForm('service_p0nbjbs', 'template_7jguaec', this)
+  emailjs .send( " service_p0nbjbs " , " template_7jguaec " )
     .then(() => {
       showNotification("✔ Mensagem enviada com sucesso!", "success");
       form.reset();
@@ -519,4 +519,5 @@ function showNotification(message, type) {
 </script>
 </body>
 </html>
+
 
